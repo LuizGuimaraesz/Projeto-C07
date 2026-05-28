@@ -119,3 +119,41 @@ GRANT 'role_gestor_frota' TO 'user_caua'@'localhost', 'user_luiz'@'localhost';
 SET DEFAULT ROLE 'role_gestor_frota' TO 'user_caua'@'localhost', 'user_luiz'@'localhost';
 
 FLUSH PRIVILEGES;
+
+-- ========================
+
+CREATE OR REPLACE VIEW V_Resumo_Gastos_Veiculo AS
+SELECT 
+    v.placa, 
+    COUNT(m.id_manutencao) AS total_manutencoes, 
+    SUM(m.custo_total) AS custo_acumulado
+FROM Veiculo v
+LEFT JOIN Manutencao m ON v.id_veiculo = m.id_veiculo
+GROUP BY v.id_veiculo;
+
+DELIMITER $$
+CREATE PROCEDURE sp_RegistrarViagem (
+    IN p_id_veiculo INT,
+    IN p_id_motorista INT,
+    IN p_destino VARCHAR(150)
+)
+BEGIN
+    IF (SELECT status_ativo FROM Motorista WHERE id_motorista = p_id_motorista) = TRUE THEN
+        INSERT INTO Viagem (id_veiculo, id_motorista, data_hora_saida, destino)
+        VALUES (p_id_veiculo, p_id_motorista, NOW(), p_destino);
+    ELSE
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Erro: Motorista inativo não pode realizar viagens.';
+    END IF;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER tg_ValidarCustoManutencao
+BEFORE INSERT ON Manutencao
+FOR EACH ROW
+BEGIN
+    IF NEW.custo_total <= 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Erro: O custo da manutenção deve ser maior que zero.';
+    END IF;
+END$$
+DELIMITER ;
