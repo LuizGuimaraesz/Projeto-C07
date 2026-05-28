@@ -113,10 +113,9 @@ CREATE ROLE IF NOT EXISTS 'role_gestor_frota';
 GRANT SELECT, INSERT, UPDATE, DELETE ON gestao_frota.* TO 'role_gestor_frota';
 
 CREATE USER IF NOT EXISTS 'user_caua'@'localhost' IDENTIFIED BY 'CauaGrupo3!';
+CREATE USER IF NOT EXISTS 'user_luiz'@'localhost' IDENTIFIED BY 'LuizGrupo3!';
 
-GRANT 'role_gestor_frota' TO 'user_caua'@'localhost';
-SET DEFAULT ROLE 'role_gestor_frota' TO 'user_caua'@'localhost';
+GRANT 'role_gestor_frota' TO 'user_caua'@'localhost', 'user_luiz'@'localhost';
+SET DEFAULT ROLE 'role_gestor_frota' TO 'user_caua'@'localhost', 'user_luiz'@'localhost';
 
 FLUSH PRIVILEGES;
-
-SELECT * FROM Manutencao;
