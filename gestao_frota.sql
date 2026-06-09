@@ -157,3 +157,19 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+
+-- ========================
+-- VERIFICACAO DAS TABELAS
+-- ========================
+
+USE gestao_frota;
+
+SELECT * FROM Veiculo;
+SELECT * FROM Rastreador;
+SELECT * FROM Motorista;
+SELECT * FROM Dependente;
+SELECT * FROM Viagem;
+SELECT * FROM Oficina;
+SELECT * FROM Manutencao;
+
+SELECT * FROM V_Resumo_Gastos_Veiculo;
