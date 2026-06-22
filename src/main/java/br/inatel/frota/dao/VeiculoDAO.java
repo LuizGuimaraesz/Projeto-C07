@@ -11,8 +11,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VeiculoDAO {
+public class VeiculoDAO implements IDAO<Veiculo> {
 
+    @Override
     public void inserir(Veiculo v) {
         String sql = "INSERT INTO Veiculo (placa, capacidade_carga) VALUES (?, ?)";
         try (Connection con = Conexao.conectar();
@@ -30,6 +31,7 @@ public class VeiculoDAO {
         }
     }
 
+    @Override
     public void atualizar(Veiculo v) {
         String sql = "UPDATE Veiculo SET placa = ?, capacidade_carga = ? WHERE id_veiculo = ?";
         try (Connection con = Conexao.conectar();
@@ -43,6 +45,7 @@ public class VeiculoDAO {
         }
     }
 
+    @Override
     public void deletar(int idVeiculo) {
         String sql = "DELETE FROM Veiculo WHERE id_veiculo = ?";
         try (Connection con = Conexao.conectar();
@@ -54,6 +57,7 @@ public class VeiculoDAO {
         }
     }
 
+    @Override
     public List<Veiculo> listar() {
         String sql = "SELECT id_veiculo, placa, capacidade_carga FROM Veiculo ORDER BY id_veiculo";
         List<Veiculo> lista = new ArrayList<>();

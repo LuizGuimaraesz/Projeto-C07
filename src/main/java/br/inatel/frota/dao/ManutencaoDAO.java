@@ -2,6 +2,8 @@ package br.inatel.frota.dao;
 
 import br.inatel.frota.db.Conexao;
 import br.inatel.frota.model.Manutencao;
+import br.inatel.frota.model.Oficina;
+import br.inatel.frota.model.Veiculo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,14 +14,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManutencaoDAO {
+public class ManutencaoDAO implements IDAO<Manutencao> {
 
+    @Override
     public void inserir(Manutencao m) {
         String sql = "INSERT INTO Manutencao (id_veiculo, id_oficina, data_servico, custo_total) VALUES (?, ?, ?, ?)";
         try (Connection con = Conexao.conectar();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, m.getIdVeiculo());
-            ps.setInt(2, m.getIdOficina());
+            ps.setInt(1, m.getVeiculo().getIdVeiculo());
+            ps.setInt(2, m.getOficina().getIdOficina());
             ps.setObject(3, m.getDataServico());
             ps.setDouble(4, m.getCustoTotal());
             ps.executeUpdate();
@@ -33,12 +36,13 @@ public class ManutencaoDAO {
         }
     }
 
+    @Override
     public void atualizar(Manutencao m) {
         String sql = "UPDATE Manutencao SET id_veiculo = ?, id_oficina = ?, data_servico = ?, custo_total = ? WHERE id_manutencao = ?";
         try (Connection con = Conexao.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, m.getIdVeiculo());
-            ps.setInt(2, m.getIdOficina());
+            ps.setInt(1, m.getVeiculo().getIdVeiculo());
+            ps.setInt(2, m.getOficina().getIdOficina());
             ps.setObject(3, m.getDataServico());
             ps.setDouble(4, m.getCustoTotal());
             ps.setInt(5, m.getIdManutencao());
@@ -48,6 +52,7 @@ public class ManutencaoDAO {
         }
     }
 
+    @Override
     public void deletar(int idManutencao) {
         String sql = "DELETE FROM Manutencao WHERE id_manutencao = ?";
         try (Connection con = Conexao.conectar();
@@ -59,6 +64,7 @@ public class ManutencaoDAO {
         }
     }
 
+    @Override
     public List<Manutencao> listar() {
         String sql = "SELECT id_manutencao, id_veiculo, id_oficina, data_servico, custo_total FROM Manutencao ORDER BY id_manutencao";
         List<Manutencao> lista = new ArrayList<>();
@@ -119,10 +125,15 @@ public class ManutencaoDAO {
     }
 
     private Manutencao mapear(ResultSet rs) throws SQLException {
+        Veiculo veiculo = new Veiculo();
+        veiculo.setIdVeiculo(rs.getInt("id_veiculo"));
+        Oficina oficina = new Oficina();
+        oficina.setIdOficina(rs.getInt("id_oficina"));
+
         return new Manutencao(
                 rs.getInt("id_manutencao"),
-                rs.getInt("id_veiculo"),
-                rs.getInt("id_oficina"),
+                veiculo,
+                oficina,
                 rs.getObject("data_servico", LocalDate.class),
                 rs.getDouble("custo_total"));
     }
