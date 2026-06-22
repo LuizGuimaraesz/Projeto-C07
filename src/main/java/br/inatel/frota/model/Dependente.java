@@ -1,23 +1,23 @@
 package br.inatel.frota.model;
 
-public class Dependente {
+public class Dependente extends Pessoa {
 
     private int idDependente;
-    private int idMotorista;
-    private String nomeDependente;
+    private Motorista motorista;
 
     public Dependente() {
+        super();
     }
 
-    public Dependente(int idMotorista, String nomeDependente) {
-        this.idMotorista = idMotorista;
-        this.nomeDependente = nomeDependente;
+    public Dependente(Motorista motorista, String nomeDependente) {
+        super(nomeDependente);
+        this.motorista = motorista;
     }
 
-    public Dependente(int idDependente, int idMotorista, String nomeDependente) {
+    public Dependente(int idDependente, Motorista motorista, String nomeDependente) {
+        super(nomeDependente);
         this.idDependente = idDependente;
-        this.idMotorista = idMotorista;
-        this.nomeDependente = nomeDependente;
+        this.motorista = motorista;
     }
 
     public int getIdDependente() {
@@ -28,25 +28,27 @@ public class Dependente {
         this.idDependente = idDependente;
     }
 
-    public int getIdMotorista() {
-        return idMotorista;
+    public Motorista getMotorista() {
+        return motorista;
     }
 
-    public void setIdMotorista(int idMotorista) {
-        this.idMotorista = idMotorista;
+    public void setMotorista(Motorista motorista) {
+        this.motorista = motorista;
     }
 
-    public String getNomeDependente() {
-        return nomeDependente;
-    }
-
-    public void setNomeDependente(String nomeDependente) {
-        this.nomeDependente = nomeDependente;
+    @Override
+    public void exibirDetalhes() {
+        System.out.println("=== Detalhes do Dependente ===");
+        System.out.println("ID: " + idDependente);
+        System.out.println("Nome: " + nome);
+        if (motorista != null) {
+            System.out.println("Dependente do Motorista: " + motorista.getNome());
+        }
     }
 
     @Override
     public String toString() {
         return String.format("Dependente [id=%d, idMotorista=%d, nome=%s]",
-                idDependente, idMotorista, nomeDependente);
+                idDependente, (motorista != null ? motorista.getIdMotorista() : 0), nome);
     }
 }

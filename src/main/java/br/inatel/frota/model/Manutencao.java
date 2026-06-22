@@ -5,25 +5,25 @@ import java.time.LocalDate;
 public class Manutencao {
 
     private int idManutencao;
-    private int idVeiculo;
-    private int idOficina;
+    private Veiculo veiculo;
+    private Oficina oficina;
     private LocalDate dataServico;
     private double custoTotal;
 
     public Manutencao() {
     }
 
-    public Manutencao(int idVeiculo, int idOficina, LocalDate dataServico, double custoTotal) {
-        this.idVeiculo = idVeiculo;
-        this.idOficina = idOficina;
+    public Manutencao(Veiculo veiculo, Oficina oficina, LocalDate dataServico, double custoTotal) {
+        this.veiculo = veiculo;
+        this.oficina = oficina;
         this.dataServico = dataServico;
         this.custoTotal = custoTotal;
     }
 
-    public Manutencao(int idManutencao, int idVeiculo, int idOficina, LocalDate dataServico, double custoTotal) {
+    public Manutencao(int idManutencao, Veiculo veiculo, Oficina oficina, LocalDate dataServico, double custoTotal) {
         this.idManutencao = idManutencao;
-        this.idVeiculo = idVeiculo;
-        this.idOficina = idOficina;
+        this.veiculo = veiculo;
+        this.oficina = oficina;
         this.dataServico = dataServico;
         this.custoTotal = custoTotal;
     }
@@ -36,20 +36,20 @@ public class Manutencao {
         this.idManutencao = idManutencao;
     }
 
-    public int getIdVeiculo() {
-        return idVeiculo;
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public void setIdVeiculo(int idVeiculo) {
-        this.idVeiculo = idVeiculo;
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
-    public int getIdOficina() {
-        return idOficina;
+    public Oficina getOficina() {
+        return oficina;
     }
 
-    public void setIdOficina(int idOficina) {
-        this.idOficina = idOficina;
+    public void setOficina(Oficina oficina) {
+        this.oficina = oficina;
     }
 
     public LocalDate getDataServico() {
@@ -71,6 +71,9 @@ public class Manutencao {
     @Override
     public String toString() {
         return String.format("Manutencao [id=%d, idVeiculo=%d, idOficina=%d, data=%s, custo=R$ %.2f]",
-                idManutencao, idVeiculo, idOficina, dataServico, custoTotal);
+                idManutencao, 
+                (veiculo != null ? veiculo.getIdVeiculo() : 0), 
+                (oficina != null ? oficina.getIdOficina() : 0), 
+                dataServico, custoTotal);
     }
 }

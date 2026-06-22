@@ -2,27 +2,27 @@ package br.inatel.frota.model;
 
 import java.time.LocalDate;
 
-public class Motorista {
+public class Motorista extends Pessoa {
 
     private int idMotorista;
-    private String nome;
     private String cpf;
     private LocalDate dataNascimento;
     private boolean statusAtivo;
 
     public Motorista() {
+        super();
     }
 
     public Motorista(String nome, String cpf, LocalDate dataNascimento, boolean statusAtivo) {
-        this.nome = nome;
+        super(nome);
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.statusAtivo = statusAtivo;
     }
 
     public Motorista(int idMotorista, String nome, String cpf, LocalDate dataNascimento, boolean statusAtivo) {
+        super(nome);
         this.idMotorista = idMotorista;
-        this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
         this.statusAtivo = statusAtivo;
@@ -34,14 +34,6 @@ public class Motorista {
 
     public void setIdMotorista(int idMotorista) {
         this.idMotorista = idMotorista;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getCpf() {
@@ -66,6 +58,16 @@ public class Motorista {
 
     public void setStatusAtivo(boolean statusAtivo) {
         this.statusAtivo = statusAtivo;
+    }
+
+    @Override
+    public void exibirDetalhes() {
+        System.out.println("=== Detalhes do Motorista ===");
+        System.out.println("ID: " + idMotorista);
+        System.out.println("Nome: " + nome);
+        System.out.println("CPF: " + cpf);
+        System.out.println("Nascimento: " + dataNascimento);
+        System.out.println("Status: " + (statusAtivo ? "Ativo" : "Inativo"));
     }
 
     @Override

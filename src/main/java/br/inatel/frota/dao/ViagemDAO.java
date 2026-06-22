@@ -1,6 +1,8 @@
 package br.inatel.frota.dao;
 
 import br.inatel.frota.db.Conexao;
+import br.inatel.frota.model.Motorista;
+import br.inatel.frota.model.Veiculo;
 import br.inatel.frota.model.Viagem;
 
 import java.sql.Connection;
@@ -12,14 +14,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViagemDAO {
+public class ViagemDAO implements IDAO<Viagem> {
 
+    @Override
     public void inserir(Viagem v) {
         String sql = "INSERT INTO Viagem (id_veiculo, id_motorista, data_hora_saida, destino) VALUES (?, ?, ?, ?)";
         try (Connection con = Conexao.conectar();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, v.getIdVeiculo());
-            ps.setInt(2, v.getIdMotorista());
+            ps.setInt(1, v.getVeiculo().getIdVeiculo());
+            ps.setInt(2, v.getMotorista().getIdMotorista());
             ps.setObject(3, v.getDataHoraSaida());
             ps.setString(4, v.getDestino());
             ps.executeUpdate();
@@ -33,12 +36,13 @@ public class ViagemDAO {
         }
     }
 
+    @Override
     public void atualizar(Viagem v) {
         String sql = "UPDATE Viagem SET id_veiculo = ?, id_motorista = ?, data_hora_saida = ?, destino = ? WHERE id_viagem = ?";
         try (Connection con = Conexao.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, v.getIdVeiculo());
-            ps.setInt(2, v.getIdMotorista());
+            ps.setInt(1, v.getVeiculo().getIdVeiculo());
+            ps.setInt(2, v.getMotorista().getIdMotorista());
             ps.setObject(3, v.getDataHoraSaida());
             ps.setString(4, v.getDestino());
             ps.setInt(5, v.getIdViagem());
@@ -48,6 +52,7 @@ public class ViagemDAO {
         }
     }
 
+    @Override
     public void deletar(int idViagem) {
         String sql = "DELETE FROM Viagem WHERE id_viagem = ?";
         try (Connection con = Conexao.conectar();
@@ -59,6 +64,7 @@ public class ViagemDAO {
         }
     }
 
+    @Override
     public List<Viagem> listar() {
         String sql = "SELECT id_viagem, id_veiculo, id_motorista, data_hora_saida, destino FROM Viagem ORDER BY id_viagem";
         List<Viagem> lista = new ArrayList<>();
@@ -119,10 +125,15 @@ public class ViagemDAO {
     }
 
     private Viagem mapear(ResultSet rs) throws SQLException {
+        Veiculo veiculo = new Veiculo();
+        veiculo.setIdVeiculo(rs.getInt("id_veiculo"));
+        Motorista motorista = new Motorista();
+        motorista.setIdMotorista(rs.getInt("id_motorista"));
+
         return new Viagem(
                 rs.getInt("id_viagem"),
-                rs.getInt("id_veiculo"),
-                rs.getInt("id_motorista"),
+                veiculo,
+                motorista,
                 rs.getObject("data_hora_saida", LocalDateTime.class),
                 rs.getString("destino"));
     }

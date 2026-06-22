@@ -5,25 +5,25 @@ import java.time.LocalDateTime;
 public class Viagem {
 
     private int idViagem;
-    private int idVeiculo;
-    private int idMotorista;
+    private Veiculo veiculo;
+    private Motorista motorista;
     private LocalDateTime dataHoraSaida;
     private String destino;
 
     public Viagem() {
     }
 
-    public Viagem(int idVeiculo, int idMotorista, LocalDateTime dataHoraSaida, String destino) {
-        this.idVeiculo = idVeiculo;
-        this.idMotorista = idMotorista;
+    public Viagem(Veiculo veiculo, Motorista motorista, LocalDateTime dataHoraSaida, String destino) {
+        this.veiculo = veiculo;
+        this.motorista = motorista;
         this.dataHoraSaida = dataHoraSaida;
         this.destino = destino;
     }
 
-    public Viagem(int idViagem, int idVeiculo, int idMotorista, LocalDateTime dataHoraSaida, String destino) {
+    public Viagem(int idViagem, Veiculo veiculo, Motorista motorista, LocalDateTime dataHoraSaida, String destino) {
         this.idViagem = idViagem;
-        this.idVeiculo = idVeiculo;
-        this.idMotorista = idMotorista;
+        this.veiculo = veiculo;
+        this.motorista = motorista;
         this.dataHoraSaida = dataHoraSaida;
         this.destino = destino;
     }
@@ -36,20 +36,20 @@ public class Viagem {
         this.idViagem = idViagem;
     }
 
-    public int getIdVeiculo() {
-        return idVeiculo;
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public void setIdVeiculo(int idVeiculo) {
-        this.idVeiculo = idVeiculo;
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
-    public int getIdMotorista() {
-        return idMotorista;
+    public Motorista getMotorista() {
+        return motorista;
     }
 
-    public void setIdMotorista(int idMotorista) {
-        this.idMotorista = idMotorista;
+    public void setMotorista(Motorista motorista) {
+        this.motorista = motorista;
     }
 
     public LocalDateTime getDataHoraSaida() {
@@ -71,6 +71,9 @@ public class Viagem {
     @Override
     public String toString() {
         return String.format("Viagem [id=%d, idVeiculo=%d, idMotorista=%d, saida=%s, destino=%s]",
-                idViagem, idVeiculo, idMotorista, dataHoraSaida, destino);
+                idViagem, 
+                (veiculo != null ? veiculo.getIdVeiculo() : 0), 
+                (motorista != null ? motorista.getIdMotorista() : 0), 
+                dataHoraSaida, destino);
     }
 }

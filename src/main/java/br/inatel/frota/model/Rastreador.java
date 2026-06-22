@@ -5,22 +5,22 @@ import java.time.LocalDate;
 public class Rastreador {
 
     private int idRastreador;
-    private int idVeiculo;
+    private Veiculo veiculo;
     private String numeroSerie;
     private LocalDate dataAtivacao;
 
     public Rastreador() {
     }
 
-    public Rastreador(int idVeiculo, String numeroSerie, LocalDate dataAtivacao) {
-        this.idVeiculo = idVeiculo;
+    public Rastreador(Veiculo veiculo, String numeroSerie, LocalDate dataAtivacao) {
+        this.veiculo = veiculo;
         this.numeroSerie = numeroSerie;
         this.dataAtivacao = dataAtivacao;
     }
 
-    public Rastreador(int idRastreador, int idVeiculo, String numeroSerie, LocalDate dataAtivacao) {
+    public Rastreador(int idRastreador, Veiculo veiculo, String numeroSerie, LocalDate dataAtivacao) {
         this.idRastreador = idRastreador;
-        this.idVeiculo = idVeiculo;
+        this.veiculo = veiculo;
         this.numeroSerie = numeroSerie;
         this.dataAtivacao = dataAtivacao;
     }
@@ -33,12 +33,12 @@ public class Rastreador {
         this.idRastreador = idRastreador;
     }
 
-    public int getIdVeiculo() {
-        return idVeiculo;
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public void setIdVeiculo(int idVeiculo) {
-        this.idVeiculo = idVeiculo;
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
     public String getNumeroSerie() {
@@ -60,6 +60,6 @@ public class Rastreador {
     @Override
     public String toString() {
         return String.format("Rastreador [id=%d, idVeiculo=%d, serie=%s, ativacao=%s]",
-                idRastreador, idVeiculo, numeroSerie, dataAtivacao);
+                idRastreador, (veiculo != null ? veiculo.getIdVeiculo() : 0), numeroSerie, dataAtivacao);
     }
 }

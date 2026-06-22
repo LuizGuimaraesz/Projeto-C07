@@ -130,7 +130,9 @@ public class Main {
                 }
                 case 3: {
                     Rastreador r = new Rastreador();
-                    r.setIdVeiculo(lerInt("Id do veiculo: "));
+                    Veiculo vId = new Veiculo();
+                    vId.setIdVeiculo(lerInt("Id do veiculo: "));
+                    r.setVeiculo(vId);
                     r.setNumeroSerie(lerTexto("Numero de serie: "));
                     r.setDataAtivacao(lerData("Data de ativacao (yyyy-MM-dd): "));
                     rastreadorDAO.inserir(r);
@@ -140,7 +142,9 @@ public class Main {
                 case 4: {
                     Rastreador r = new Rastreador();
                     r.setIdRastreador(lerInt("Id do rastreador a atualizar: "));
-                    r.setIdVeiculo(lerInt("Novo id do veiculo: "));
+                    Veiculo vId = new Veiculo();
+                    vId.setIdVeiculo(lerInt("Novo id do veiculo: "));
+                    r.setVeiculo(vId);
                     r.setNumeroSerie(lerTexto("Novo numero de serie: "));
                     r.setDataAtivacao(lerData("Nova data de ativacao (yyyy-MM-dd): "));
                     rastreadorDAO.atualizar(r);
@@ -218,8 +222,10 @@ public class Main {
                     break;
                 case 3: {
                     Dependente d = new Dependente();
-                    d.setIdMotorista(lerInt("Id do motorista responsavel: "));
-                    d.setNomeDependente(lerTexto("Nome do dependente: "));
+                    Motorista mId = new Motorista();
+                    mId.setIdMotorista(lerInt("Id do motorista responsavel: "));
+                    d.setMotorista(mId);
+                    d.setNome(lerTexto("Nome do dependente: "));
                     dependenteDAO.inserir(d);
                     System.out.println("Dependente inserido.");
                     break;
@@ -227,16 +233,16 @@ public class Main {
                 case 4: {
                     Dependente d = new Dependente();
                     d.setIdDependente(lerInt("Id do dependente: "));
-                    d.setIdMotorista(lerInt("Id do motorista: "));
-                    d.setNomeDependente(lerTexto("Novo nome do dependente: "));
+                    Motorista mId = new Motorista();
+                    mId.setIdMotorista(lerInt("Id do motorista: "));
+                    d.setMotorista(mId);
+                    d.setNome(lerTexto("Novo nome do dependente: "));
                     dependenteDAO.atualizar(d);
                     System.out.println("Dependente atualizado.");
                     break;
                 }
                 case 5:
-                    dependenteDAO.deletar(
-                            lerInt("Id do dependente a deletar: "),
-                            lerInt("Id do motorista: "));
+                    dependenteDAO.deletar(lerInt("Id do dependente a deletar: "));
                     System.out.println("Dependente deletado.");
                     break;
                 case 0: break;
@@ -261,8 +267,12 @@ public class Main {
                     break;
                 case 3: {
                     Viagem v = new Viagem();
-                    v.setIdVeiculo(lerInt("Id do veiculo: "));
-                    v.setIdMotorista(lerInt("Id do motorista: "));
+                    Veiculo veic = new Veiculo();
+                    veic.setIdVeiculo(lerInt("Id do veiculo: "));
+                    v.setVeiculo(veic);
+                    Motorista mot = new Motorista();
+                    mot.setIdMotorista(lerInt("Id do motorista: "));
+                    v.setMotorista(mot);
                     v.setDataHoraSaida(lerDataHora("Data/hora de saida (yyyy-MM-dd HH:mm:ss): "));
                     v.setDestino(lerTexto("Destino: "));
                     viagemDAO.inserir(v);
@@ -272,8 +282,12 @@ public class Main {
                 case 4: {
                     Viagem v = new Viagem();
                     v.setIdViagem(lerInt("Id da viagem a atualizar: "));
-                    v.setIdVeiculo(lerInt("Novo id do veiculo: "));
-                    v.setIdMotorista(lerInt("Novo id do motorista: "));
+                    Veiculo veic = new Veiculo();
+                    veic.setIdVeiculo(lerInt("Novo id do veiculo: "));
+                    v.setVeiculo(veic);
+                    Motorista mot = new Motorista();
+                    mot.setIdMotorista(lerInt("Novo id do motorista: "));
+                    v.setMotorista(mot);
                     v.setDataHoraSaida(lerDataHora("Nova data/hora (yyyy-MM-dd HH:mm:ss): "));
                     v.setDestino(lerTexto("Novo destino: "));
                     viagemDAO.atualizar(v);
@@ -355,8 +369,12 @@ public class Main {
                     break;
                 case 3: {
                     Manutencao m = new Manutencao();
-                    m.setIdVeiculo(lerInt("Id do veiculo: "));
-                    m.setIdOficina(lerInt("Id da oficina: "));
+                    Veiculo veic = new Veiculo();
+                    veic.setIdVeiculo(lerInt("Id do veiculo: "));
+                    m.setVeiculo(veic);
+                    Oficina ofi = new Oficina();
+                    ofi.setIdOficina(lerInt("Id da oficina: "));
+                    m.setOficina(ofi);
                     m.setDataServico(lerData("Data do servico (yyyy-MM-dd): "));
                     m.setCustoTotal(lerDouble("Custo total (R$): "));
                     manutencaoDAO.inserir(m);
@@ -366,8 +384,12 @@ public class Main {
                 case 4: {
                     Manutencao m = new Manutencao();
                     m.setIdManutencao(lerInt("Id da manutencao a atualizar: "));
-                    m.setIdVeiculo(lerInt("Novo id do veiculo: "));
-                    m.setIdOficina(lerInt("Novo id da oficina: "));
+                    Veiculo veic = new Veiculo();
+                    veic.setIdVeiculo(lerInt("Novo id do veiculo: "));
+                    m.setVeiculo(veic);
+                    Oficina ofi = new Oficina();
+                    ofi.setIdOficina(lerInt("Novo id da oficina: "));
+                    m.setOficina(ofi);
                     m.setDataServico(lerData("Nova data (yyyy-MM-dd): "));
                     m.setCustoTotal(lerDouble("Novo custo (R$): "));
                     manutencaoDAO.atualizar(m);
